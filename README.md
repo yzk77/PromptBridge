@@ -1,6 +1,10 @@
 # Prompt Bridge
 
 <p align="center">
+  <strong>简体中文</strong> · <a href="README.en.md">English</a>
+</p>
+
+<p align="center">
   <strong>在 AI 桌面客户端中用中文思考，用英文提示词发送。</strong>
 </p>
 
