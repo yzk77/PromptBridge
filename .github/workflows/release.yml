@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore ChineseToChatGPT.sln
+
+      - name: Build and test
+        run: |
+          dotnet build ChineseToChatGPT.sln -c Release --no-restore
+          dotnet run --project tests/ChineseToChatGPT.Tests/ChineseToChatGPT.Tests.csproj -c Release --no-build
+
+      - name: Publish self-contained app
+        run: >-
+          dotnet publish src/ChineseToChatGPT.App/ChineseToChatGPT.App.csproj
+          -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -o artifacts/PromptBridge
+
+      - name: Create ZIP
+        shell: pwsh
+        run: Compress-Archive -Path artifacts/PromptBridge/* -DestinationPath artifacts/PromptBridge-win-x64.zip
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PromptBridge-win-x64
+          path: artifacts/PromptBridge-win-x64.zip
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:GITHUB_REF_NAME artifacts/PromptBridge-win-x64.zip --generate-notes --verify-tag
