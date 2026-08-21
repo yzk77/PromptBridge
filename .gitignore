@@ -1,0 +1,41 @@
+# .NET build output
+**/bin/
+**/obj/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# IDE and editor state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local SDK/cache directories
+.dotnet-home/
+.nuget/
+
+# Local publish output and release archives
+publish/
+publish-*/
+*.zip
+*.nupkg
+*.snupkg
+
+# Runtime/user data and credentials must never be committed
+settings.json
+usage.json
+diagnostics-*.log
+*.log
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local visual-QA captures not used by the README
+dark-console-preview.png

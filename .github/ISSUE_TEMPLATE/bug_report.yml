@@ -1,0 +1,50 @@
+name: Bug 报告
+description: 报告可重复的软件故障（安全问题请勿公开提交）
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: 请勿粘贴真实 API Key、提示词、译文或剪贴板内容。
+  - type: input
+    id: version
+    attributes:
+      label: Prompt Bridge 版本
+      placeholder: 例如 2.0.2
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: 客户端
+      options:
+        - ChatGPT for Windows
+        - Claude Desktop / Claude Code
+        - Antigravity 2.0
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 重现步骤
+      description: 请使用脱敏的示例内容。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: Windows 版本、客户端版本、翻译服务商和发送模式。
